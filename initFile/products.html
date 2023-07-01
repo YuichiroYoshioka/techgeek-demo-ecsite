@@ -9,12 +9,7 @@
 </head>
 
 <body>
-  <!-- 
-    画像のURLは以下のものを使用してください。
-    - https://burst.shopifycdn.com/photos/woman-practices-yoga-in-green-grass.jpg?width=925&format=pjpg&exif=1&iptc=1
-    - https://burst.shopifycdn.com/photos/person-holds-themselves-parallel-to-a-blue-yoga-mat.jpg?width=925&format=pjpg&exif=1&iptc=1
-    - https://burst.shopifycdn.com/photos/young-woman-doing-yoga-in-park.jpg?width=925&format=pjpg&exif=1&iptc=1
-   -->
+  
   <header>
     <h1><a href="/">デモECサイト</a></h1>
     <nav>
@@ -54,5 +49,39 @@
     </div>
   </main>
 </body>
+
+<script>
+  window.onload = function() {
+   
+    //localStorage.clear();
+
+    var products = document.getElementsByClassName("product");
+
+    for (let i = 0; i < products.length; i++) {
+      products[i].addEventListener("click", function() {
+        var productName = this.getElementsByClassName("product-name")[0].innerText;
+        var productId = this.getElementsByClassName("product-id")[0].getAttribute('id');
+        var productPrice = this.getElementsByClassName("product-price")[0].innerText;
+
+        var productInfo = {
+          'name': productName,
+          'id': productId,
+          'price': productPrice
+        };
+
+        var productArray = JSON.parse(localStorage.getItem("selectitems") || "[]");
+
+        if (!productArray.some(product => product.id === productId)) {
+          productArray.push(productInfo);
+          localStorage.setItem("selectitems", JSON.stringify(productArray));
+        }
+      });
+    }
+  }
+</script>
+
+
+
+
 
 </html>

@@ -30,16 +30,55 @@
         </thead>
         <tbody>
           <!-- 商品情報は以下の形式で追加してください -->
-          <tr>
-            <td>商品名1</td>
-            <td>001</td>
-            <td>¥1000</td>
-            <td>1</td>
-          </tr>
         </tbody>
       </table>
+      <button>削除</button>
     </div>
   </main>
 </body>
 
+<script>
+  window.onload = function() {
+    var productArray = JSON.parse(localStorage.getItem("selectitems") || "[]");
+    var tableBody = document.querySelector("tbody");
+    var totalPrice = 0;
+
+    if (productArray.length > 0) {
+      for (let i = 0; i < productArray.length; i++) {
+        var row = document.createElement("tr");
+        var nameCell = document.createElement("td");
+        nameCell.textContent = productArray[i].name;
+        row.appendChild(nameCell);
+        var idCell = document.createElement("td");
+        idCell.textContent = productArray[i].id;
+        row.appendChild(idCell);
+        var priceCell = document.createElement("td");
+        priceCell.textContent = productArray[i].price;
+        row.appendChild(priceCell);
+        totalPrice += Number(productArray[i].price.replace(/[^0-9.-]+/g,""));
+        var quantityCell = document.createElement("td");
+        quantityCell.textContent = '1';
+        row.appendChild(quantityCell);
+        tableBody.appendChild(row);
+      }
+
+      var totalRow = document.createElement("tr");
+      var totalLabelCell = document.createElement("td");
+      totalLabelCell.textContent = "Total";
+      totalRow.appendChild(totalLabelCell);
+      var totalValueCell = document.createElement("td");
+      totalValueCell.textContent = "¥" + totalPrice;
+      totalRow.appendChild(totalValueCell);
+      tableBody.appendChild(totalRow);
+    }
+
+    var deleteButton = document.querySelector("button");
+    deleteButton.addEventListener("click", function() {
+      localStorage.removeItem("selectitems");
+      while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+      }
+    });
+  }
+</script>
 </html>

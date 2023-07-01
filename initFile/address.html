@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>デモECサイト - フォーム</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<html>
+<body>
+    <form id="userForm">
+        <label for="firstName">姓: </label>
+        <input type="text" id="firstName" name="firstName" required><br>
+        <label for="lastName">名: </label>
+        <input type="text" id="lastName" name="lastName" required><br>
+        <label for="phoneNumber">電話番号: </label>
+        <input type="text" id="phoneNumber" name="phoneNumber" required><br>
+        <label for="favoriteFood">好きな食べ物: </label>
+        <input type="text" id="favoriteFood" name="favoriteFood" required><br>
+        <input type="submit" value="保存">
+    </form>
+<script src="script.js"></script>
+</body>
+</html>
+
+<a href="./index.html">indexに戻る</a>
+
+<script>
+
+  window.onload = function () {
+    // リロードした際の情報の再表示
+    document.getElementById('firstName').value = sessionStorage.getItem('firstName') || '';
+    document.getElementById('lastName').value = sessionStorage.getItem('lastName') || '';
+    document.getElementById('phoneNumber').value = sessionStorage.getItem('phoneNumber') || '';
+    document.getElementById('favoriteFood').value = sessionStorage.getItem('favoriteFood') || '';
+
+    // Submitボタンが押されたときの処理
+    document.getElementById('userForm').onsubmit = function (event) {
+        event.preventDefault();  // デフォルトの送信動作を防ぐ
+
+        // 入力されたデータを取得
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let phoneNumber = document.getElementById('phoneNumber').value;
+        let favoriteFood = document.getElementById('favoriteFood').value;
+
+        // データをsession storageに保存
+        sessionStorage.setItem('firstName', firstName);
+        sessionStorage.setItem('lastName', lastName);
+        sessionStorage.setItem('phoneNumber', phoneNumber);
+        sessionStorage.setItem('favoriteFood', favoriteFood);
+    }
+}
+
+</script>
