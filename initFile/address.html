@@ -8,7 +8,10 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <html>
-<body>
+<body id="body">
+
+  <button id="toggleButton">モード切替</button>
+
     <form id="userForm">
         <label for="firstName">姓: </label>
         <input type="text" id="firstName" name="firstName" required><br>
@@ -20,7 +23,7 @@
         <input type="text" id="favoriteFood" name="favoriteFood" required><br>
         <input type="submit" value="保存">
     </form>
-<script src="script.js"></script>
+
 </body>
 </html>
 
@@ -29,6 +32,34 @@
 <script>
 
   window.onload = function () {
+    const body = document.getElementById('body');
+    const button = document.getElementById('toggleButton');
+
+    // ページが読み込まれたときに設定をlocalStorageから読み込む
+    let mode = localStorage.getItem('mode');
+    if (mode === 'dark') {
+        body.style.backgroundColor = 'black';
+        body.style.color = 'white';
+    } else {
+        body.style.backgroundColor = 'white';
+        body.style.color = 'black';
+    }
+
+    // ボタンが押されたときにモードを切り替える
+    button.onclick = function () {
+        console.log("こんにちは");
+        mode = localStorage.getItem('mode');
+        if (mode === 'dark') {
+            body.style.backgroundColor = 'white';
+            body.style.color = 'black';
+            localStorage.setItem('mode', 'light');
+        } else {
+            body.style.backgroundColor = 'black';
+            body.style.color = 'white';
+            localStorage.setItem('mode', 'dark');
+        }
+    }
+
     // リロードした際の情報の再表示
     document.getElementById('firstName').value = sessionStorage.getItem('firstName') || '';
     document.getElementById('lastName').value = sessionStorage.getItem('lastName') || '';
@@ -53,4 +84,4 @@
     }
 }
 
-</script>
+    </script>
